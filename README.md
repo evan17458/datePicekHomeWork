@@ -1,3 +1,11 @@
+## 預覽網站
+
+這個專案已部署到 Vercel，你可以在以下連結查看線上預覽版本：
+
+🔗 [預覽連結](https://date-picek.vercel.app/)
+
+此網站展示了日期選擇期 功能，並基於 next.js 技術構建。
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -6,7 +14,6 @@ First, run the development server:
 
 ```bash
 npm run dev
-
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -65,3 +72,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ### 運行測試
 
 要運行測試，請在終端中執行以下命令：
+
+```bash
+npm run test
+```
