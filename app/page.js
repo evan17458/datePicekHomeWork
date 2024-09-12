@@ -5,11 +5,14 @@ import {
   addMonths,
   startOfMonth,
   endOfMonth,
+  startOfWeek,
+  endOfWeek,
   isSameMonth,
   isSameDay,
   isAfter,
   isBefore,
   addDays,
+  getDay,
 } from "date-fns";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -42,17 +45,17 @@ const DateRangePicker = () => {
   const renderDays = () => {
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(monthStart);
-    const startDay = startOfMonth(monthStart);
-    const endDay = endOfMonth(monthEnd);
+    const startDate = startOfWeek(monthStart);
+    const endDate = endOfWeek(monthEnd);
 
     const dateFormat = "d";
     const rows = [];
 
     let days = [];
-    let day = startDay;
+    let day = startDate;
     let formattedDate = "";
 
-    while (day <= endDay) {
+    while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
         formattedDate = format(day, dateFormat);
         const cloneDay = day;
@@ -68,11 +71,10 @@ const DateRangePicker = () => {
         const isCurrentMonth = isSameMonth(day, monthStart);
 
         let backgroundColor = dayState.default;
-        let textColor = "inherit";
-        if (!isCurrentMonth) textColor = dayState.nonCurrentMonth;
+        let textColor = isCurrentMonth ? "inherit" : dayState.nonCurrentMonth;
         if (isToday) backgroundColor = dayState.today;
         if (isSelected) backgroundColor = dayState.active;
-        if (isInRange) backgroundColor = dayState.active;
+        // if (isInRange) backgroundColor = dayState.active;
 
         days.push(
           <div
@@ -96,29 +98,46 @@ const DateRangePicker = () => {
     return rows;
   };
 
-  return (
-    <div className="p-4 w-[350px]">
+  const renderHeader = () => {
+    const dateFormat = "yyyy年M月";
+    return (
       <div className="flex justify-between items-center mb-4">
         <ChevronLeft
           className="cursor-pointer"
           onClick={() => setCurrentMonth(addMonths(currentMonth, -1))}
         />
-        <span>{format(currentMonth, "yyyy年MM月")}</span>
+        <span>{format(currentMonth, dateFormat)}</span>
         <ChevronRight
           className="cursor-pointer"
           onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
         />
       </div>
-      <div className="grid grid-cols-7 gap-1 text-center mb-2">
-        {["日", "一", "二", "三", "四", "五", "六"].map((day) => (
-          <div key={day} className="font-bold">
-            {day}
-          </div>
-        ))}
-      </div>
+    );
+  };
 
+  const renderDaysOfWeek = () => {
+    const dateFormat = "EEEEEE";
+    const days = [];
+    let startDate = startOfWeek(currentMonth);
+
+    for (let i = 0; i < 7; i++) {
+      days.push(
+        <div key={i} className="font-bold">
+          {format(addDays(startDate, i), dateFormat)}
+        </div>
+      );
+    }
+
+    return (
+      <div className="grid grid-cols-7 gap-1 text-center mb-2">{days}</div>
+    );
+  };
+
+  return (
+    <div className="p-4 w-[400px]">
+      {renderHeader()}
+      {renderDaysOfWeek()}
       {renderDays()}
-
       <div className="mt-4">
         <p>
           開始日期: {startDate ? format(startDate, "yyyy-MM-dd") : "未選擇"}
