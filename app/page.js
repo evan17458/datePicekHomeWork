@@ -21,7 +21,7 @@ const DateRangePicker = () => {
   // 日期狀態對象
   const dayState = {
     default: "white",
-    hover: "#a6e6e6",
+    hover: "#e6e6e6",
     today: "#ffff76",
     active: "#006edc",
     nonCurrentMonth: "#757575",
@@ -71,11 +71,11 @@ const DateRangePicker = () => {
         if (!isCurrentMonth) backgroundColor = dayState.nonCurrentMonth;
         if (isToday) backgroundColor = dayState.today;
         if (isSelected) backgroundColor = dayState.active;
-        if (isInRange) backgroundColor = dayState.hover;
+        if (isInRange) backgroundColor = dayState.active;
 
         days.push(
           <div
-            className={`w-[50px] py-1 m-1 text-center cursor-pointer`}
+            className={`w-[50px] py-1 m-1 text-center cursor-pointer transition-colors duration-200 ease-in-out hover:!bg-[#e6e6e6]`}
             style={{ backgroundColor }}
             key={day}
             onClick={() => onDateClick(cloneDay)}
