@@ -5,7 +5,6 @@ import {
   addMonths,
   startOfMonth,
   endOfMonth,
-  eachDayOfInterval,
   isSameMonth,
   isSameDay,
   isAfter,
@@ -18,6 +17,15 @@ const DateRangePicker = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
+  // 日期狀態對象
+  const dayState = {
+    default: "white",
+    hover: "#a6e6e6",
+    today: "#ffff76",
+    active: "#006edc",
+    nonCurrentMonth: "#757575",
+  };
 
   const onDateClick = (day) => {
     if (!startDate || (startDate && endDate)) {
@@ -34,34 +42,41 @@ const DateRangePicker = () => {
   const renderDays = () => {
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(monthStart);
-    const startDate = startOfMonth(monthStart);
-    const endDate = endOfMonth(monthEnd);
+    const startDay = startOfMonth(monthStart);
+    const endDay = endOfMonth(monthEnd);
 
     const dateFormat = "d";
     const rows = [];
 
     let days = [];
-    let day = startDate;
+    let day = startDay;
     let formattedDate = "";
 
-    while (day <= endDate) {
+    while (day <= endDay) {
       for (let i = 0; i < 7; i++) {
         formattedDate = format(day, dateFormat);
         const cloneDay = day;
+        const isToday = isSameDay(day, new Date());
+        const isSelected =
+          (startDate && isSameDay(day, startDate)) ||
+          (endDate && isSameDay(day, endDate));
+        const isInRange =
+          startDate &&
+          endDate &&
+          isAfter(day, startDate) &&
+          isBefore(day, endDate);
+        const isCurrentMonth = isSameMonth(day, monthStart);
+
+        let backgroundColor = dayState.default;
+        if (!isCurrentMonth) backgroundColor = dayState.nonCurrentMonth;
+        if (isToday) backgroundColor = dayState.today;
+        if (isSelected) backgroundColor = dayState.active;
+        if (isInRange) backgroundColor = dayState.hover;
+
         days.push(
           <div
-            className={` w-[50px] py-1 m-1 text-center cursor-pointer ${
-              !isSameMonth(day, monthStart)
-                ? "text-gray-400"
-                : isSameDay(day, startDate) || isSameDay(day, endDate)
-                ? "bg-blue-500 text-white rounded"
-                : startDate &&
-                  endDate &&
-                  isAfter(day, startDate) &&
-                  isBefore(day, endDate)
-                ? "bg-blue-100"
-                : ""
-            }`}
+            className={`w-[50px] py-1 m-1 text-center cursor-pointer`}
+            style={{ backgroundColor }}
             key={day}
             onClick={() => onDateClick(cloneDay)}
           >
@@ -81,7 +96,7 @@ const DateRangePicker = () => {
   };
 
   return (
-    <div className="p-4 w-[350px] ">
+    <div className="p-4 w-[350px]">
       <div className="flex justify-between items-center mb-4">
         <ChevronLeft
           className="cursor-pointer"
