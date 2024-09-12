@@ -13,7 +13,6 @@ import {
   isBefore,
   addDays,
 } from "date-fns";
-import { zhTW } from "date-fns/locale";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const DateRangePicker = () => {
@@ -21,7 +20,6 @@ const DateRangePicker = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
-  // 日期狀態對象
   const dayState = {
     default: "white",
     hover: "#e6e6e6",
@@ -78,12 +76,12 @@ const DateRangePicker = () => {
 
         days.push(
           <div
-            className={`w-[50px] py-1 m-1 text-center cursor-pointer transition-colors duration-200 ease-in-out hover:!bg-[#e6e6e6]`}
+            className={`w-[50px] flex items-center justify-center h-[36px]   text-base cursor-pointer transition-colors duration-200 ease-in-out hover:!bg-[#e6e6e6]`}
             style={{ backgroundColor, color: textColor }}
             key={day}
             onClick={() => onDateClick(cloneDay)}
           >
-            {formattedDate}
+            {formattedDate}日
           </div>
         );
         day = addDays(day, 1);
@@ -101,43 +99,24 @@ const DateRangePicker = () => {
   const renderHeader = () => {
     const dateFormat = "yyyy年M月";
     return (
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center mb-4 h-11">
         <ChevronLeft
-          className="cursor-pointer"
+          className="cursor-pointer p-1  transition-colors duration-200 ease-in-out hover:bg-[#e6e6e6] w-11 h-11"
           onClick={() => setCurrentMonth(addMonths(currentMonth, -1))}
         />
-        <span>{format(currentMonth, dateFormat, { locale: zhTW })}</span>
+        <span>{format(currentMonth, dateFormat)}</span>
         <ChevronRight
-          className="cursor-pointer"
+          className="cursor-pointer p-1  transition-colors duration-200 ease-in-out hover:bg-[#e6e6e6] w-11 h-11"
           onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
         />
       </div>
     );
   };
 
-  // const renderDaysOfWeek = () => {
-  //   const dateFormat = "EEEEEE";
-  //   const days = [];
-  //   let startDay = startOfWeek(currentMonth);
-
-  //   for (let i = 0; i < 7; i++) {
-  //     days.push(
-  //       <div key={i} className="font-bold">
-  //         {format(addDays(startDay, i), dateFormat, { locale: zhTW })}
-  //       </div>
-  //     );
-  //   }
-
-  //   return (
-  //     <div className="grid grid-cols-7 gap-1 text-center mb-2">{days}</div>
-  //   );
-  // };
-
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-4 rounded-lg shadow-md w-[350px] ">
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="bg-white p-1 w-[358px] ">
         {renderHeader()}
-        {/* {renderDaysOfWeek()} */}
         {renderDays()}
       </div>
     </div>
