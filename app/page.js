@@ -101,11 +101,13 @@ const DateRangePicker = () => {
     return (
       <div className="flex justify-between items-center mb-4 h-11">
         <ChevronLeft
+          data-testid="left-arrow"
           className="cursor-pointer p-1  transition-colors duration-200 ease-in-out hover:bg-[#e6e6e6] w-11 h-11"
           onClick={() => setCurrentMonth(addMonths(currentMonth, -1))}
         />
         <span>{format(currentMonth, dateFormat)}</span>
         <ChevronRight
+          data-testid="right-arrow"
           className="cursor-pointer p-1  transition-colors duration-200 ease-in-out hover:bg-[#e6e6e6] w-11 h-11"
           onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
         />
