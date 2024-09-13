@@ -1,6 +1,6 @@
 ## 預覽網站
 
-這個專案已部署到 Vercel，你可以在以下連結查看線上預覽版本：
+**專案已部署到 Vercel，**
 
 🔗 [預覽連結](https://date-picek.vercel.app/)
 
@@ -12,23 +12,11 @@
 
 ## 開始使用
 
-首先，運行開發伺服器：
-
 ```bash
 npm run dev
 ```
 
-在瀏覽器中打開 http://localhost:3000 來查看結果。
-
-你可以通過修改 `app/page.js` 文件來開始編輯頁面。當你編輯文件時，頁面會自動更新。
-
-這個專案使用 `next/font` 來自動優化和加載 Inter，這是一種自定義的 Google 字體。
-
 #
-
-## 部署到 Vercel
-
-部署 Next.js 應用的最簡單方法是使用 Next.js 創建者提供的 [Vercel 平台](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)。
 
 ## 測試說明
 
@@ -135,7 +123,7 @@ const renderDays = () => {
    days = [];
    ```
 
-   每處理完 7 天，就將這一週添加到 `rows` 數組中，然後重置 `days` 數組。
+   每處理完 7 天，就將這一週添加到 `rows` 陣列中，然後重置 `days` 陣列。
 
 5. **返回結果**
 
@@ -143,7 +131,7 @@ const renderDays = () => {
    return rows;
    ```
 
-   函數最終返回包含所有週的數組。
+   函數最終返回包含所有週的陣列。
 
 ## 詳細執行過程
 
