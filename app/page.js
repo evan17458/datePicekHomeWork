@@ -43,13 +43,11 @@ const DateRangePicker = () => {
   const renderDays = () => {
     // 獲取當前月份的起始日和結束日
     const monthStart = startOfMonth(currentMonth);
-    console.log("monthStart", monthStart);
     //Aug 01
     const monthEnd = endOfMonth(monthStart);
     // 獲取包含整個月的完整週的起始日和結束日
     const startDay = startOfWeek(monthStart);
     //Jul 28
-    console.log("startDay", startDay);
     const endDay = endOfWeek(monthEnd);
 
     const dateFormat = "d"; // 設置日期格式為日期數字
@@ -81,8 +79,7 @@ const DateRangePicker = () => {
         if (isToday) backgroundColor = dayState.today;
         if (isSelected) backgroundColor = dayState.active;
         if (isInRange) backgroundColor = dayState.active;
-        console.log("startDay", startDay);
-        // 創建日期元素並添加到days數組
+        // 創建日期元素並添加到days陣列
         days.push(
           <div
             className={`w-[50px] flex items-center justify-center h-[36px]   text-base cursor-pointer transition-colors duration-200 ease-in-out hover:!bg-[#e6e6e6]`}
@@ -93,23 +90,17 @@ const DateRangePicker = () => {
             {formattedDate}日
           </div>
         );
-        console.log("days", days);
-
         day = addDays(day, 1); // 移至下一天
       }
       // 將一週的日期添加到行中
-
       rows.push(
         <div className="flex" key={day}>
           {days}
         </div>
       );
 
-      //console.log("rows", rows);
-
-      days = []; // 重置days數組，準備下一週
+      days = []; // 重置days陣列，準備下一週
     }
-    console.log("rows", rows);
     return rows;
   };
 
